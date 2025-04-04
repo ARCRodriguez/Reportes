@@ -1,0 +1,117 @@
+-- Crear la base de datos
+CREATE DATABASE IF NOT EXISTS dbpelicula;
+USE dbpelicula;
+
+-- Tabla Pelicula
+CREATE TABLE Pelicula (
+    id_pelicula INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    anio YEAR NOT NULL
+);
+
+-- Tabla Actor
+CREATE TABLE Actor (
+    id_actor INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    apellido VARCHAR(100) NOT NULL
+);
+
+-- Tabla Estudio
+CREATE TABLE Estudio (
+    id_estudio INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    direccion VARCHAR(255) NOT NULL
+);
+
+-- Tabla intermedia Actua (Relación Pelicula - Actor)
+CREATE TABLE Actua (
+    id_pelicula INT,
+    id_actor INT,
+    PRIMARY KEY (id_pelicula, id_actor),
+    FOREIGN KEY (id_pelicula) REFERENCES Pelicula(id_pelicula) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_actor) REFERENCES Actor(id_actor) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- Tabla intermedia Produce (Relación Pelicula - Estudio)
+CREATE TABLE Produce (
+    id_pelicula INT,
+    id_estudio INT,
+    PRIMARY KEY (id_pelicula, id_estudio),
+    FOREIGN KEY (id_pelicula) REFERENCES Pelicula(id_pelicula) ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (id_estudio) REFERENCES Estudio(id_estudio) ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////// -- Insertar datos en las tablas -- /////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////
+-- Insertar datos en la tabla pelicula
+INSERT INTO pelicula (nombre, anio) VALUES
+('Inception', 2010),
+('The Matrix', 1999),
+('Interstellar', 2014),
+('The Godfather', 1972),
+('The Dark Knight', 2008),
+('Pulp Fiction', 1994),
+('Fight Club', 1999),
+('Forrest Gump', 1994),
+('The Shawshank Redemption', 1994),
+('The Lord of the Rings', 2001),
+('Gladiator', 2000),
+('Titanic', 1997),
+('Avengers: Endgame', 2019),
+('The Silence of the Lambs', 1991),
+('Schindler’s List', 1993);
+
+-- Insertar datos en la tabla actor
+INSERT INTO actor (nombre, apellido) VALUES
+('Leonardo', 'DiCaprio'),
+('Keanu', 'Reeves'),
+('Robert', 'De Niro'),
+('Al', 'Pacino'),
+('Tom', 'Hanks'),
+('Morgan', 'Freeman'),
+('Brad', 'Pitt'),
+('Johnny', 'Depp'),
+('Joaquin', 'Phoenix'),
+('Heath', 'Ledger'),
+('Russell', 'Crowe'),
+('Anthony', 'Hopkins'),
+('Liam', 'Neeson'),
+('Samuel', 'Jackson'),
+('Harrison', 'Ford');
+
+-- Insertar datos en la tabla estudio
+INSERT INTO estudio (nombre, direccion) VALUES
+('Warner Bros.', 'Burbank, California, USA'),
+('Paramount Pictures', 'Hollywood, California, USA'),
+('20th Century Fox', 'Century City, Los Angeles, USA'),
+('Universal Pictures', 'Universal City, California, USA'),
+('Columbia Pictures', 'Culver City, California, USA'),
+('Walt Disney Studios', 'Burbank, California, USA'),
+('MGM Studios', 'Beverly Hills, California, USA'),
+('DreamWorks', 'Glendale, California, USA'),
+('Pixar Animation Studios', 'Emeryville, California, USA'),
+('Sony Pictures', 'Culver City, California, USA'),
+('Lionsgate', 'Santa Monica, California, USA'),
+('New Line Cinema', 'Los Angeles, California, USA'),
+('Legendary Pictures', 'Burbank, California, USA'),
+('Marvel Studios', 'Burbank, California, USA'),
+('Netflix Studios', 'Los Gatos, California, USA');
+
+-- Insertar datos en la tabla actua (relación pelicula - actor)
+INSERT INTO actua (id_pelicula, id_actor) VALUES
+(1, 1), (1, 2), (2, 2), (2, 3), (3, 1),
+(3, 5), (4, 3), (4, 4), (5, 6), (5, 10),
+(6, 7), (6, 14), (7, 7), (7, 8), (8, 5),
+(8, 6), (9, 6), (9, 7), (10, 9), (10, 10),
+(11, 11), (11, 7), (12, 1), (12, 14), (13, 14),
+(14, 12), (14, 13), (15, 13), (15, 10), (15, 11);
+
+-- Insertar datos en la tabla produce (relación pelicula - estudio)
+INSERT INTO produce (id_pelicula, id_estudio) VALUES
+(1, 1), (2, 3), (3, 4), (4, 2), (5, 1),
+(6, 5), (7, 6), (8, 4), (9, 7), (10, 8),
+(11, 9), (12, 10), (13, 11), (14, 12), (15, 13);
+
+
+
